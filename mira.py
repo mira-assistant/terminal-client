@@ -17,13 +17,13 @@ version = "2.0.0"
 
 def connect_to_server():
     try:
-        response = requests.post(
-            url=f"{base_url}/register_client", params={"client_id": client_id}
-        )
+        response = requests.post(url=f"{base_url}/register_client", params={"client_id": client_id})
         response.raise_for_status()
 
         if response.json().get("version") != version:
-            print(f"ERROR: Version mismatch - expected {version}, got {response.json().get('version')}")
+            print(
+                f"ERROR: Version mismatch - expected {version}, got {response.json().get('version')}"
+            )
             print("Please update your client to match the server version.")
             sys.exit(1)
 
@@ -66,11 +66,11 @@ def disable_mira():
 async def process_interaction(sentence_buf: bytearray):
     try:
         response = requests.post(
-            url=f"{base_url}/process_interaction",
+            url=f"{base_url}/register_interaction",
             data=bytes(sentence_buf),
             headers={"Content-Type": "application/octet-stream"},
         )
-        
+
         response.raise_for_status()
         return response.json()
     except Exception as e:
@@ -87,7 +87,7 @@ def signal_handler(signum, frame):
 if __name__ == "__main__":
     # Set up signal handler for graceful shutdown
     signal.signal(signal.SIGINT, signal_handler)
-    
+
     sentence_buf = bytearray()
 
     atexit.register(disable_mira)
@@ -117,7 +117,7 @@ if __name__ == "__main__":
                 continue
 
             asyncio.run(process_interaction(sentence_buf))
-            
+
     except KeyboardInterrupt:
         print("\nMira interrupted.")
         sys.exit(0)
