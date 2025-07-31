@@ -17,7 +17,7 @@ version = "2.0.0"
 
 def connect_to_server():
     try:
-        response = requests.post(url=f"{base_url}/register_client", params={"client_id": client_id})
+        response = requests.post(url=f"{base_url}/service/client/register/{client_id}")
         response.raise_for_status()
 
         if response.json().get("version") != version:
@@ -36,8 +36,8 @@ def connect_to_server():
 
 def disconnect_from_server():
     try:
-        response = requests.post(
-            url=f"{base_url}/deregister_client", params={"client_id": client_id}
+        response = requests.delete(
+            url=f"{base_url}/service/client/deregister/{client_id}"
         )
         response.raise_for_status()
         print("Disconnected from server.")
@@ -47,7 +47,7 @@ def disconnect_from_server():
 
 def enable_mira():
     try:
-        response = requests.patch(url=f"{base_url}/enable")
+        response = requests.patch(url=f"{base_url}/service/enable")
         response.raise_for_status()
         print("Mira enabled.")
     except Exception as e:
@@ -56,7 +56,7 @@ def enable_mira():
 
 def disable_mira():
     try:
-        response = requests.patch(url=f"{base_url}/disable")
+        response = requests.patch(url=f"{base_url}/service/disable")
         response.raise_for_status()
         print("Mira disabled.")
     except Exception as e:
@@ -66,7 +66,7 @@ def disable_mira():
 async def process_interaction(sentence_buf: bytearray):
     try:
         response = requests.post(
-            url=f"{base_url}/register_interaction",
+            url=f"{base_url}/interactions/register",
             data=bytes(sentence_buf),
             headers={"Content-Type": "application/octet-stream"},
         )
