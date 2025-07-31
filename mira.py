@@ -66,7 +66,7 @@ def disable_mira():
 async def process_interaction(sentence_buf: bytearray):
     try:
         response = requests.post(
-            url=f"{base_url}/register_interaction",
+            url=f"{base_url}/interactions/register",
             data=bytes(sentence_buf),
             headers={"Content-Type": "application/octet-stream"},
         )
