@@ -1,0 +1,28 @@
+# Python cache files
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*$py.class
+
+# Test files and temporary directories
+/tmp/
+demo_*.py
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+venv/
+env/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
